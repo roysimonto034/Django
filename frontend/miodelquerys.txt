@@ -1,0 +1,41 @@
+from query.models import  Comp,Progr,Lang
+
+Comp.objects
+Comp.objects.all()
+Lang.objects.all()
+
+lang[0]
+lang[0].name
+Lang.objects.filter(name__exact='python')
+Lang.objects.filter(name__exact='java')
+Lang.objects.filter(name__iexact='Java')
+Lang.objects.exclude(name__exact='Python')
+Lang.objects.exclude(name__exact='java')
+Prog.objects.filter(age__gt=25)
+prog.objects.filter(age__gte=24)
+Prog.objects.filter(age__lt=32)
+Prog.objects,filter(age__lte=25)
+Comp.objects.filter(name__contains='nte')
+Comp.objects.filter(name__contains='hn')
+Progr.objects,filter(name__in=['ANTHON','quecngy','Peter'])
+Progr.objects.exclude(name__in['Baven','Brtiito'])
+Progr.objects.filter(name__startswith='jan')
+Progr.objects.filter(name__istartswith='Jan')
+progr.objects.filter(name__endswith='y')
+Progr.objects.exclude(name__endswith='Yf')
+Progr.objects.filter(age__isnull=True)
+Progr.objects.filter(age__isnull=False)
+Lang.objects.count()
+Lang.objects.filter(name__endswith='p').count()
+Lang.objects.filter(name__endswith='y').count()
+jony=Progr.objects.filter(name__exact='johny')
+jony=Progr.objects.filter(name__exact='johny').get() "will work only for 1 result set,if noc results is 
+                                                      more than 1then get will fail"
+progr.objects.all()[5:10]
+Comp.objects.filter(date_created__gt='1992-01-23')
+Comp.objects.all().order_by('name')
+Compr.objects.all().order_by('-name')
+Compr.objects.all().order_by('datecreated')
+
+python=Lang.objects.filter(name__exact='python').get()
+python.programmer_set.all()

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{%load staticfiles%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee</title>
+    <link rel="stylesheet" href="{%static "css/mycss.css" %}">
+</head>
+<body>
+<img src="{%static "image/terex.jpg" %}">
+{%if emply %}
+    <h1>Employee Details</h1>
+    {% for emp in emply  %}
+        <u>
+        <h2>{{emp.empname}} Details: </h2>
+        </u>
+        <ul>
+            <li><b>Roll:</b>{{emp.emproll}}</li>
+            <li><b>DOB:</b>{{emp.empdob}}</li>
+            <li><b>Email:</b>{{emp.empmail}}</li>
+            <li><b>Phone:</b>{{emp.phonenum}}</li>
+            <li><b>Addr:</b>{{emp.empaddr}}</li>
+        </ul>
+    <br>
+    {% endfor %}
+    {% else %}
+       <h2>No Data Found</h2>
+{% endif %}
+</body>
+</html>

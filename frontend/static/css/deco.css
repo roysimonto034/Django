@@ -1,0 +1,10 @@
+body{
+background: orange;
+color: blue;
+text-align: center;
+}
+img{
+  border: 10px dotted red;
+  width: 25%;
+  height : 250px;
+}
