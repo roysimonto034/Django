@@ -1,12 +1,19 @@
-git steps:
-for cretaing a folder :
-go to github ui create a folderlike mygitcode
+Git steps for cretaing a folder :
+---------------------------------
+go to github ui create a repository like mygitcode
 
 go cmd
-type git clone 'ssh...@mygitcode'
-put changes
-commit and push to remote git
+create a folder mytest
+type git init
+type git clone 'git@github.com:roysimonto034/mygitcode.git'
+cd mygitcode
+git pull origin master
+touch  file.txt ,put content
+add file.txt
+commit file.txt
+git push origin master
 
+Django
 -----------------------------
 startproject
 startapp
