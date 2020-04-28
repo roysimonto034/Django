@@ -139,6 +139,8 @@ class Demo(View):
           mdta = json.dumps(mydict)
           return HttpResponse(mdta,content_type='application/json')
 
+#--------------------------------------------------------------Curd operations on Forms-------------------------------------		  
+		  
 def emp_form(request):
     empl = EmployeeForm()
     return render(request,"restapp/forms.html",context={"form":empl})
