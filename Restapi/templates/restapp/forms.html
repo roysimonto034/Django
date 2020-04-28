@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Django forms tutorial</title>
+</head>
+<body>
+ <h1> Welcome to Django forms </h1>
+ <form method="POST" class="post-form">
+ 		{% csrf_token %}
+ 		{{form.as_p}}
+ <button onclick="myFunction()">submit</button>
+ <script>
+function myFunction() {
+  alert("Form sunmitted successfully");
+}
+</script>
+</form>
+</body>
+</html>

@@ -7,5 +7,5 @@ class My_httpresponse_mixins(object):
           return JsonResponse(data)
 
       def render_http_response(self,jsdata):
-          #data=json.dumps(jsdata)
-          return HttpResponse(jsdata,content_type='application/json')
+          data=json.dumps(jsdata)
+          return HttpResponse(data,content_type='application/json')

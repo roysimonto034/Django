@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Django forms tutorial</title>
+</head>
+<body>
+ <h1>Employee Details</h1>
+ <table border="2px">
+    {% if emp_data %}
+        <thead>
+        	<th>Empno</th>
+        	<th>Empname</th>
+        	<th>Empsal</th>
+        	<th>Empaddr</th>
+        	<th>ID</th>
+        </thead>
+ 		{% for ip in emp_data %}
+ 		   <tr>
+			 	<td>{{ip.id}}</td>
+			 	<td>{{ip.empno}}</td>
+			 	<td>{{ip.empname}}</td>
+			 	<td>{{ip.empsal}}</td>
+			 	<td>{{ip.eddr}}</td>
+		   </tr>
+   		{% endfor %}
+    {% else %}
+    	<h2>No Employee records found</h2>
+    {% endif %}
+ </table>
+</body>
+</html>

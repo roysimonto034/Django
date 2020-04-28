@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404,render
 import json
 from django.http import JsonResponse
 from django.http import HttpResponse
@@ -6,7 +6,7 @@ from django.views.generic import View
 from django.core.serializers import serialize
 from restapp.mixin import My_httpresponse_mixins
 from . models import *
-
+from . forms import EmployeeForm,Empmodel
 # Create your views here.
 # ---------------------------------------------function based views
 def restmethod(request):
@@ -19,12 +19,8 @@ def restmethod(request):
     return HttpResponse(json.dumps(empdata),content_type='application/json')
 
 def restmethod2(request):
-    empdata={
-        'empname':'Jaswinder',
-        'emproll':3454,
-        'empsal':454576,
-        'empaddr':'Delhi'
-    }
+    empdata={ 'empname':'Jaswinder', 'emproll':3454,
+    'empsal':454576, 'empaddr':'Delhi' } 
     return JsonResponse(empdata)
 
 #  -----------------------------------------------class based views
@@ -78,7 +74,7 @@ class Myportmixin(My_httpresponse_mixins,View):
               'Dept': 'CSE',
               'School': 'Delhi Public School'
          }
-         return self.render_http_reponse(epdata)
+         return self.render_http_response(epdata)
 
 
 
@@ -116,5 +112,104 @@ class Empserialize(View): #used mixins
           return self.render_http_response(jsdata)
 
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+class Token(APIView):
+    permission_classes = (IsAuthenticated,)
+    #http http://127.0.0.1:8000/restapi/jwttoken/ "Authorization: Token a0ed7c3fcd681b7874d848addaaecfbd6904749e"
+    def get(self,request):
+        content={"message":"Go corona go"}
+        return Response(content)
 
+
+class Demo(View):
+
+      def get(selfself,request):
+          #import pdb;pdb.set_trace()
+          data = Employee.objects.all()
+          mydict={}
+          for i in range(5):
+              mydata = {'emp'+str(i): data[i].empno,
+                        'name'+str(i) : data[i].empname,
+                        'sal'+str(i) : data[i].empsal,
+                        'addr'+str(i) : data[i].eaddr
+                      }
+              mydict.update({'data'+str(i):mydata})
+          mdta = json.dumps(mydict)
+          return HttpResponse(mdta,content_type='application/json')
+
+def emp_form(request):
+    empl = EmployeeForm()
+    return render(request,"restapp/forms.html",context={"form":empl})
+
+def emp_form_add(request):
+    if request.method == 'POST':
+       #import pdb;pdb.set_trace()
+       form = EmployeeForm(request.POST)
+       if form.is_valid():
+          try:
+            name = form.cleaned_data["empname"]
+            email = form.cleaned_data["email"]
+            Indian = form.cleaned_data["Indian"]
+            message = form.cleaned_data["message"]
+            context = {"name" : name,
+                       "email" : email,
+                       "Indian" : Indian,
+                       "message" : message}
+            #form.save(commit=True)
+            #return HttpResponse("form saved successfully")
+            return render(request,"restapp/response.html",context=context)
+          except:
+            pass
+    else:
+        form = EmployeeForm()
+        return render(request,"restapp/forms.html",context={"form":form}) 
+        """above statement is invoked first which displays form othrwise no form will be displayed ,try comment it once"""
+
+
+
+"""
+context={"form":form} here key is importtant for render to template
+form.save is available only for model forms
+
+site: https://www.geeksforgeeks.org/django-crud-create-retrieve-update-delete-function-based-views/
+
+"""
+
+def empmodelform(request):
+    if request.method == 'POST':
+        #import pdb;pdb.set_trace()
+        form = Empmodel(request.POST)
+        if form.is_valid():
+           form.save(commit=True)
+           emp = Employee.objects.all().order_by('id')
+           #return HttpResponse("<h1>Data Saved successfully</h1>")
+           #return render(request,"restapp/display.html",context={"emp_data":emp})
+           return show(request)
+    else:
+        form = Empmodel()
+        return render(request,"restapp/modelforms.html",context={"form":form})
+
+def show(request):
+    data = Employee.objects.all().order_by('id')
+    return render(request,"restapp/display.html",context={"emp_data": data}) 
+
+def Delete(request,id):
+    #emp = Employee.objects.get(id=id)
+    emp = get_object_or_404(Employee,id=id)
+    form = Empmodel(request.POST or None ,instance=emp)
+    if request.method == "POST":
+        emp.delete()
+        return show(request)
+    return render(request,"restapp/deleteform.html",context={"form":form})
+
+def UpdateEmp(request,id):
+    emp = Employee.objects.get(id=id)
+    #import pdb;pdb.set_trace()
+    form = Empmodel(request.POST or None ,instance=emp) 
+    if form.is_valid():
+       form.save(commit=True)
+       return show(request)
+    return render(request,"restapp/updateform.html",context={"form":form})  
 
