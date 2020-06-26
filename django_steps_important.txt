@@ -156,4 +156,6 @@ The process of converting Python object to json is serializationx
 two ways: 1.json.dumps
           2. using django serializer 
           3.By using rest framework serializers
-[  
+[ 
+
+Thats All as of now
